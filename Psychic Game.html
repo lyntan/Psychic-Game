@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <title>The Psychic Game</title>
+ </head>
+
+ <body>
+
+ <div id="game">
+  <h1>The Psychic Game</h1>
+
+  <p>Guess what letter I am thinking of by pressing any letter key on your keyboard.</p>
+
+  <p>Wins:</p>
+
+  <p>Losses:</p>
+
+  <p>Guesses Left:</p>
+
+  <p>Your Guesses So Far:</p>
+
+ </div>
+
+<script type="text/javascript">
+
+
+
+ //Computer choice is determined by letter strings placed into an array. Computer guess chooses a random string as it's guess for the user to match. Upon keystroke, user choices are placed in their own array and displayed onscreen. **Learned that the computer guess equation has to go below the computer choices array in order to be able to read it.
+
+ var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+ var computerGuess = computerChoices[Math.floor(Math.random()*computerChoices.length)];
+ var guessChoices = [];
+ var guessesLeft = 10;
+ var wins = 0;
+ var losses = 0;
+
+ //Function made to read pressed key and push to guessed choices array
+
+ document.onkeyup = function (event) {
+
+ var userGuess= event.key
+ guessChoices.push(userGuess)
+  
+//If user guess is equivalent to computer guess, alert win and reset guesses left and guess choices.
+  
+  if (userGuess === computerGuess) {
+    wins++;
+    alert("Win!")
+    guessesLeft = 10;
+    guessChoices = [];
+  }
+
+// If user guess count reaches 0, alert loss and reset guess to 10 and clear choice array. 
+
+  if (guessesLeft === 0) {
+    losses++;
+    alert("You've lost!")
+    guessesLeft = 10;
+    guessChoices = [];
+  }
+
+  // If guesses are not equivalent, then the guesses left decreases. 
+  
+  if (userGuess != computerGuess) {
+    guessesLeft--;
+  }
+
+
+//Assigns visible changes in wins, losses, and guesses. This was previously at the beginning of the script and all of the values read as undefined so this must be placed after the variables are listed.
+ 
+var html = 
+
+"<h1>The Psychic Game</h1>" +
+"<p>Guess what letter I am thinking of by pressing any letter key on your keyboard.</p>" +
+"<p>Wins:" + wins + "</p>" +
+
+"<p>Losses:" + losses + "</p>" +
+
+"<p>Guesses Left:" + guessesLeft + "</p>"  +
+
+"<p>Your Guesses So Far:" + guessChoices + "</p>";
+
+document.querySelector('#game').innerHTML = html;
+
+
+};
+   
+</script>
+</body>
+</html>
+
+
